@@ -2,7 +2,7 @@ export const transactionTypeDef = `#graphql
 
 type Transaction{
   _id:ID!
-  desc:String!
+  description:String!
   paymentType:String!
   category:String!
   amount:Float!
@@ -22,7 +22,7 @@ type Mutation{
 }
 
 input CrateTransactionInput{
-  desc:String!
+  description:String!
   paymentType:String!
   category:String!
   amount:Float!
@@ -31,7 +31,7 @@ input CrateTransactionInput{
 }
 
 input UpdateTransactionInput{
-  desc:String
+  description:String
   paymentType:String
   category:String
   amount:Float
