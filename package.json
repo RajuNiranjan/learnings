@@ -1,28 +1,27 @@
 {
-  "name": "graph_ql",
+  "name": "graph_ql_practice",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon api/index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
   "dependencies": {
     "@apollo/server": "^4.11.0",
     "@graphql-tools/merge": "^9.0.7",
+    "@graphql-tools/schema": "^10.0.6",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0",
     "graphql": "^16.9.0",
-    "http": "^0.0.1-security",
-    "mongoose": "^8.6.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
+    "http": "^0.0.1-security"
   }
 }
