@@ -7,7 +7,7 @@ import { MergeResolvers } from "./resolvers/index.js"
 import { MergeTypeDefs } from './typeDefs/index.js'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import { expressMiddleware } from '@apollo/server/express4'
-
+import './db/connectDB.js'
 
 dotenv.config()
 
