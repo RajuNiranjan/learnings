@@ -7,6 +7,7 @@ type User{
     email:String!
     password:String!
     profilePicture:String
+    gender:String!
 }
 
 
@@ -28,6 +29,7 @@ input SignUpInput{
     email:String!
     password:String!
     profilePicture:String
+    gender:String!
 }
 
 input LogInInput{
