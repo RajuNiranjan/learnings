@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -13,21 +12,5 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^3.1.4"
-  },
-  "dependencies": {
-    "@apollo/server": "^4.11.0",
-    "@graphql-tools/merge": "^9.0.7",
-    "@graphql-tools/schema": "^10.0.6",
-    "bcryptjs": "^2.4.3",
-    "connect-mongodb-session": "^5.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express-session": "^1.18.0",
-    "graphql": "^16.9.0",
-    "graphql-passport": "^0.6.8",
-    "graphql-ws": "^5.16.0",
-    "http": "^0.0.1-security",
-    "mongoose": "^8.6.2",
-    "passport": "^0.7.0"
   }
 }
