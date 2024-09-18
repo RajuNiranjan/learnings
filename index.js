@@ -11,6 +11,9 @@ import { configurePassport } from './passport/passport.config.js'
 import { expressMiddleware } from '@apollo/server/express4'
 import { buildContext } from 'graphql-passport'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { MergeResolvers } from './resolvers/index.js'
+import { MergerTypeDefs } from './typeDefs/index.js'
+
 
 dotenv.config()
 configurePassport()
@@ -43,8 +46,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    typeDefs: MergerTypeDefs,
+    resolvers: MergeResolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 })
 
