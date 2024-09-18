@@ -55,5 +55,25 @@ export const userResolver = {
                 throw new Error(error.message);
             }
         }
+    },
+    Query: {
+        authUser: async (_, _, context) => {
+            try {
+                const user = await context.getUser()
+                return user
+            } catch (error) {
+                console.log(error);
+                throw new Error(error.message)
+            }
+        },
+        user: async (_, { userId }) => {
+            try {
+                const user = await UserModel.findById(userId)
+                return user
+            } catch (error) {
+                console.log(error);
+                throw new Error(error.message)
+            }
+        }
     }
 }
