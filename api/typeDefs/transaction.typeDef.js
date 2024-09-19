@@ -2,18 +2,17 @@ export const transactionTypeDef = `#graphql
 
 type Transaction{
     _id:ID!
-    userID:ID!
-    description:String!
+    userId:ID!
     paymentType:String!
-    amount:Float!
-    date:String!
     category:String!
+    description:String!
+    date:String!
     location:String
 }
 
 type Query{
-    transaction(transactionId:ID!):Transaction
     transactions:Transaction
+    transaction(transactionId:ID!):Transaction
 }
 
 type Mutation{
@@ -23,20 +22,20 @@ type Mutation{
 }
 
 input CreateTransactionInput{
-    description:String!
+    userId:ID!
     paymentType:String!
-    amount:Float!
-    date:String!
     category:String!
+    description:String!
+    date:String!
     location:String
 }
 
 input UpdateTransactionInput{
-    description:String
+    userId:ID
     paymentType:String
-    amount:Float
-    date:String
     category:String
+    description:String
+    date:String
     location:String
 }
 

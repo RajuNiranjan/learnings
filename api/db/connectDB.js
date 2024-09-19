@@ -4,14 +4,15 @@ dotenv.config()
 
 const ConnectDB = async () => {
     try {
-        const dbUri = process.env.DB_URI
-        if (dbUri) {
-            await mongoose.connect(dbUri).then(() => console.log('server connected to data base')).catch((e) => console.log(e))
+        const DB_URI = process.env.DB_URI
+        if (DB_URI) {
+            await mongoose.connect(DB_URI).then(() => console.log("server connected to Data Base")).catch((e) => console.log(e))
         } else {
             console.log("Invalid DB_URI");
         }
     } catch (error) {
         console.log(error);
+        throw new Error(error.message)
     }
 }
 

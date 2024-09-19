@@ -1,30 +1,27 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import http from 'http'
 import session from 'express-session'
-import connectMongo from 'connect-mongodb-session'
-import passport from 'passport'
+import connectMongoo from 'connect-mongodb-session'
 import { ApolloServer } from '@apollo/server'
-import dotenv from 'dotenv'
-import cors from 'cors'
-import './db/connectDB.js'
-import { configurePassport } from './passport/passport.config.js'
-import { expressMiddleware } from '@apollo/server/express4'
-import { buildContext } from 'graphql-passport'
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import { MergeResolvers } from './resolvers/index.js'
 import { MergerTypeDefs } from './typeDefs/index.js'
-
+import passport from 'passport'
+import cors from 'cors'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { expressMiddleware } from '@apollo/server/express4'
+import { buildContext } from 'graphql-passport'
+import './db/connectDB.js'
 
 dotenv.config()
-configurePassport()
 
 const app = express()
 
 const httpServer = http.createServer(app)
 
-const MongoStore = connectMongo(session)
+const MongoDBStore = connectMongoo(session)
 
-const store = new MongoStore({
+const store = new MongoDBStore({
     uri: process.env.DB_URI,
     collection: "session"
 })
@@ -35,15 +32,17 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: store,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true
+        httpOnly: true,
     },
-    store: store
-}))
+}));
 
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 const server = new ApolloServer({
     typeDefs: MergerTypeDefs,
@@ -53,17 +52,37 @@ const server = new ApolloServer({
 
 await server.start()
 
-app.use('/',
+
+app.use(
+    "/graphql",
     cors({
         origin: "http://localhost:3000",
-        credentials: true
+        credentials: true,
     }),
     express.json(),
     expressMiddleware(server, {
-        context: async (req, res) => buildContext({ req, res })
+        context: async ({ req, res }) => buildContext({ req, res }),
     })
-)
+);
 
-await new Promise((resolve) => ({ port: 4000 }, resolve))
+app.use(
+    "/graphql",
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    }),
+    express.json(),
+    expressMiddleware(server, {
+        context: async ({ req, res }) => buildContext({ req, res }),
+    })
+);
 
-console.log(`server runnig at port 4000`);
+
+
+await new Promise((resolve) => {
+    httpServer.listen(4000, resolve);
+});
+
+console.log("Server running at port 4000");
+
+
