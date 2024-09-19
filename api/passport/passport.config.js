@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 import { GraphQLLocalStrategy } from "graphql-passport";
 import passport from "passport";

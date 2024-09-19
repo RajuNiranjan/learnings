@@ -5,12 +5,13 @@ import session from 'express-session'
 import MongoDBSession from 'connect-mongodb-session'
 import passport from 'passport'
 import cors from 'cors'
-import { ApolloServer } from '@apollo/server'
+import { ApolloServer } from '@apollo/server';
 import { MergeResolvers } from './resolvers/index.js'
 import { MergerTypeDefs } from './typeDefs/index.js'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import { expressMiddleware } from '@apollo/server/express4'
 import { buildContext } from 'graphql-passport'
+import './db/connnectDB.js'
 
 dotenv.config()
 
@@ -49,19 +50,19 @@ const server = new ApolloServer({
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 })
 
-await server.start()
+await server.start();
 
 app.use(
-    '/',
+    '/graphql',
     cors({
         origin: "http://localhost:3000",
         credentials: true
     }),
     express.json(),
-    expressMiddleware(session, {
+    expressMiddleware(server, { // Pass server instead of session
         context: async ({ req, res }) => buildContext({ req, res })
     })
-)
+);
 
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve))
 console.log("server running at port 4000");

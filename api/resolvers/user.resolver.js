@@ -1,4 +1,4 @@
-import { UserModel } from "../models/user.model"
+import { UserModel } from "../models/user.model.js"
 import bcrypt from 'bcryptjs'
 
 export const userResolver = {
@@ -44,7 +44,7 @@ export const userResolver = {
                 throw new Error(error.message)
             }
         },
-        logout: async (_, _, context) => {
+        logout: async (_, __, context) => {
             try {
                 await context.logout()
                 context.req.session.destroy((e) => {
@@ -58,7 +58,7 @@ export const userResolver = {
         }
     },
     Query: {
-        authUser: async (_, _, context) => {
+        authUser: async (_, __, context) => {
             try {
                 const user = context.getUser()
                 return user
