@@ -5,13 +5,20 @@ export const userResolver = {
     Mutation: {
         signup: async (_, { input }, context) => {
             try {
-                const { username, name, gender, password } = input
-                if (!username || !name || !gender || !password) throw new Error("All fields are required")
+                console.log("Signup input:", input);
 
-                const existingUser = await UserModel.findOne({ username })
-                if (existingUser) throw new Error("User already existed")
-                const salt = await bcrypt.getSalt(10)
-                const hashPassowrd = await bcrypt.hash(password, salt)
+                const { username, name, gender, password } = input;
+                if (!username || !name || !gender || !password) {
+                    throw new Error("All fields are required");
+                }
+
+                const existingUser = await UserModel.findOne({ username });
+                if (existingUser) {
+                    throw new Error("User already existed");
+                }
+
+                const salt = await bcrypt.genSalt(10);
+                const hashPassword = await bcrypt.hash(password, salt);
 
                 const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
                 const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
@@ -20,18 +27,19 @@ export const userResolver = {
                     username,
                     name,
                     gender,
-                    password: hashPassowrd,
+                    password: hashPassword,
                     profilePicture: gender === 'male' ? boyProfilePic : girlProfilePic
-                })
+                });
 
-                await newUser.save()
-                await context.login(newUser)
-                return newUser
+                await newUser.save();
+                await context.login(newUser);
+                return newUser;
             } catch (error) {
                 console.error("Error during signup:", error);
                 throw new Error(error.message);
             }
         },
+
         login: async (_, { input }, context) => {
             try {
                 const { username, password } = input
