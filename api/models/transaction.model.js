@@ -6,7 +6,7 @@ const transactionSchema = new Schema({
     paymentType: { type: String, enum: ["card", "cash"], required: true },
     date: { type: Date, required: true },
     amount: { type: Number, required: true },
-    category: { type: String, enum: ["savings", "expenses", "income"], required: true },
+    category: { type: String, enum: ["savings", "expenses", "investment"], required: true },
     location: { type: String, default: "Unknown" }
 })
 

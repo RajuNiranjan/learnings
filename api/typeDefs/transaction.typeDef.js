@@ -7,35 +7,37 @@ type Transaction{
     category:String!
     description:String!
     date:String!
+    amount:Float!
     location:String
 }
 
 type Query{
-    transactions:Transaction
+    transactions:[Transaction!]
     transaction(transactionId:ID!):Transaction
 }
 
 type Mutation{
-    createTransaction(input:CreateTransactionInput):Transaction
-    updateTransaction(input:UpdateTransactionInput):Transaction
-    deleteTransaction(transactionId:ID!):Transaction
+    createTransaction(input:CreateTransactionInput):Transaction!
+    updateTransaction(input:UpdateTransactionInput):Transaction!
+    deleteTransaction(transactionId:ID!):Transaction!
 }
 
 input CreateTransactionInput{
-    userId:ID!
     paymentType:String!
     category:String!
     description:String!
     date:String!
+    amount:String!
     location:String
 }
 
 input UpdateTransactionInput{
-    userId:ID
+    userId:ID!
     paymentType:String
     category:String
     description:String
     date:String
+    amount:String
     location:String
 }
 

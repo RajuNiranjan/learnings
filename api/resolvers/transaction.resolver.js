@@ -36,6 +36,7 @@ export const transactionResolver = {
     Query: {
         transactions: async (_, args, context) => {
             try {
+
                 const transactions = await TransactionModel.find({ userId: context.getUser()._id });
                 return transactions;
             } catch (error) {

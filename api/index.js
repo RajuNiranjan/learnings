@@ -12,9 +12,10 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import { expressMiddleware } from '@apollo/server/express4'
 import { buildContext } from 'graphql-passport'
 import './db/connectDB.js'
+import { configurePassport } from './passport/passport.config.js'
 
 dotenv.config()
-
+configurePassport()
 const app = express()
 
 const httpServer = http.createServer(app)

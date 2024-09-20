@@ -6,6 +6,6 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     gender: { type: String, enum: ["male", 'female'], required: true, },
     profilePicture: { type: String, default: "" }
-})
+}, { timestamps: true })
 
 export const UserModel = mongoose.model("User", userSchema)

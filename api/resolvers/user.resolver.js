@@ -49,10 +49,11 @@ export const userResolver = {
         },
         logout: async (_, args, context) => {
             try {
-                await context.logour()
+                await context.logout()
                 context.req.session.destroy((e) => {
                     if (e) throw e
                 })
+                context.res.clearCookie("connect.sid")
                 return { message: "Logged out successfully" }
             } catch (error) {
                 console.log(error);
@@ -70,7 +71,7 @@ export const userResolver = {
                 throw new Error(error.message)
             }
         },
-        user: async (_, { userId }, context) => {
+        user: async (_, { userId }) => {
             try {
                 const user = await UserModel.findById(userId)
                 if (!user) throw new Error("User not found");
