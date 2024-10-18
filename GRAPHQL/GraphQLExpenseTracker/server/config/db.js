@@ -1,5 +1,5 @@
-import { ENV_VAR } from "./env_var.js";
 import mongoose from "mongoose";
+import { ENV_VAR } from "../utils/env_var.js";
 
 const ConnectDB = async () => {
   try {
@@ -13,7 +13,7 @@ const ConnectDB = async () => {
       console.log("Invalid Data Base URL");
     }
   } catch (error) {
-    console.log("error while connecting to data base", error);
+    console.log("while connecting to data base an error occured", error);
   }
 };
 
