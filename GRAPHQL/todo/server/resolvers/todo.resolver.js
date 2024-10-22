@@ -43,15 +43,18 @@ export const todoResolver = {
 
     // IS CHECKED
 
-    isChecked: async (_, { input }) => {
-      const { taskId } = input;
+    isChecked: async (_, { taskId }) => {
       try {
         const task = await TodoModel.findById(taskId);
+        if (!task) {
+          throw new Error("Task not found");
+        }
         task.isChecked = !task.isChecked;
         await task.save();
         return task;
       } catch (error) {
         console.log(error);
+        throw new Error("Failed to toggle task status");
       }
     },
   },
