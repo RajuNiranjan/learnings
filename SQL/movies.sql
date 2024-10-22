@@ -70,12 +70,26 @@ CREATE DATABASE college;
     
 USE college;
     
-   CREATE TABLE Students (
+CREATE TABLE Students (
     roll_no INT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     marks INT,
     city VARCHAR(100),
     grade CHAR(2)
+);
+
+CREATE TABLE dept (
+  id INT PRIMARY KEY,
+  name VARCHAR(50)
+);
+DROP TABLE teacher;
+CREATE TABLE teacher(
+id INT PRIMARY KEY,
+name VARCHAR(50),
+dept_id INT,
+FOREIGN KEY (dept_id) REFERENCES dept(id)
+ON UPDATE CASCADE
+ON DELETE CASCADE
 );
 
 INSERT INTO Students (roll_no, name, marks, city, grade)
@@ -108,13 +122,24 @@ SET grade = "O"
 WHERE grade = "A+";
     
 SELECT * FROM Students;
+
+INSERT INTO dept
+VALUES
+	(101,"EEE"),
+    (102,"IT");
     
+SELECT * FROM dept;
+
+INSERT INTO teacher
+VALUES
+	(101,"Adam",101),
+    (102,"Eve",102);
     
-    
-    
-    
-    
-    
+SELECT * FROM teacher;
+
+UPDATE dept
+SET id = 103
+WHERE id = 102;
     
     
     
