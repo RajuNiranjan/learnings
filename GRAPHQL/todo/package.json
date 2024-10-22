@@ -1,8 +1,7 @@
 {
-  "name": "todo-app",
+  "name": "todo",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server/server.js"
@@ -11,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
     "@apollo/server": "^4.11.0",
     "cors": "^2.8.5",
