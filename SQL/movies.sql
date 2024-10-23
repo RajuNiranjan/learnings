@@ -143,9 +143,13 @@
     
     
     
+ DROP DATABASE college;
  
+ CREATE DATABASE College;
+ 
+ USE College;
     
-    CREATE TABLE Student (
+CREATE TABLE Student (
     studentId INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     branch VARCHAR(10),
@@ -242,20 +246,73 @@ SELECT * FROM Student WHERE city IN ("Chicago");
 
 SELECT * FROM Student WHERE city NOT IN ("Chicago");
 
+-- CASECADE 
 
+-- CREATE TABLE Dept (
+-- id INT PRIMARY KEY,
+-- name VARCHAR(50)
+-- );
 
+-- INSERT INTO Dept(id, name)
+-- VALUES
+-- 	(201, "EEE"),
+--     (101, "CIVIL"),
+--     (301, "ME");
 
+-- SELECT * FROM Dept;
+--     
+-- CREATE TABLE Teacher (
+-- 	id INT PRIMARY KEY,
+--     name VARCHAR(50),
+--     department_id INT,
+--     FOREIGN KEY (department_id) REFERENCES Dept(id)
+--     ON UPDATE CASCADE
+--     ON DELETE CASCADE
+-- );
 
+-- INSERT INTO Teacher(id, name, department_id)
+-- VALUES
+-- 	(11, "Rani",101),
+--     (21,"James",201),
+--     (31, "JD", 301);
+--     
+-- SELECT * FROM Teacher;
 
+-- UPDATE Dept 
+-- SET id = 401
+-- WHERE id = 201 
 
+SELECT * FROM Student;
 
+-- ALTER
 
+-- ADD COLUMN
+ALTER TABLE Student
+ADD COLUMN age INT DEFAULT 19;
 
+-- DROP COLUMN 
+ALTER TABLE Student
+DROP COLUMN age;
 
+-- MODIFY COLUMN
+ALTER TABLE Student
+MODIFY COLUMN age VARCHAR(2);
 
+-- CHANGE COLUMN
+ALTER TABLE Student
+CHANGE COLUMN age stu_age INT;
 
+-- RENAME TABLE -- 
+ALTER TABLE Student
+RENAME TO Stu;
 
+SELECT * FROM Stu;
 
+ALTER TABLE Stu
+CHANGE COLUMN name full_name VARCHAR(50);
+
+ALTER TABLE Stu
+DROP COLUMN gpa;
 
 
 
