@@ -303,10 +303,10 @@ ALTER TABLE Student
 CHANGE COLUMN age stu_age INT;
 
 -- RENAME TABLE -- 
-ALTER TABLE Student
-RENAME TO Stu;
+ALTER TABLE Stu
+RENAME TO Student;
 
-SELECT * FROM Stu;
+SELECT * FROM Student;
 
 ALTER TABLE Stu
 CHANGE COLUMN name full_name VARCHAR(50);
@@ -314,31 +314,93 @@ CHANGE COLUMN name full_name VARCHAR(50);
 ALTER TABLE Stu
 DROP COLUMN gpa;
 
+USE College;
 
+CREATE TABLE Stu(
+	student_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
 
+INSERT INTO Stu (student_id, name)
+VALUES 
+	(1,"John"),
+	(2,"Deo"),
+    (3,"OKP");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT * FROM Stu;
     
+CREATE TABLE Course(
+	student_id INT PRIMARY KEY,
+    course VARCHAR(100)
+);
+
+INSERT INTO Course (student_id, course)
+VALUES
+	(2,"EEE"),
+    (4, "CSE"),
+    (6, "ME");
+
+SELECT * FROM Course;
+
+-- INNER JOIN 
+SELECT * FROM Stu
+INNER JOIN Course
+ON Stu.student_id = Course.Student_id;
+
+-- RIGHT JOIN -- 
+SELECT * FROM Stu
+RIGHT JOIN Course
+ON Stu.student_id = Course.student_id;
+
+-- LEFT JOIN
+SELECT * FROM Stu
+LEFT JOIN Course
+ON Stu.student_id = Course.student_id;
+
+-- FULL JOIN
+
+SELECT * FROM Stu AS s
+LEFT JOIN Course AS c
+ON s.student_id = c.student_id
+UNION
+SELECT * FROM Stu AS s
+RIGHT JOIN Course AS c
+ON s.student_id = c.student_id;
+
+-- LEFT EXCLUSIVE JOIN -- 
+
+SELECT * FROM Stu AS s
+LEFT JOIN Course AS c
+ON s.student_id = c.student_id
+WHERE c.student_id IS NULL;
+
+
+-- RIGHT EXCLUSIVE JOIN -- 
+
+SELECT * FROM Stu AS s
+RIGHT JOIN Course AS c
+ON s.student_id = c.student_id
+WHERE s.student_id IS NULL;
+
+
+CREATE TABLE Employee(
+em_id INT PRIMARY KEY,
+name VARCHAR(100),
+mng_id INT
+);
+
+INSERT INTO Employee(em_id, name, mng_id)
+VALUES
+	(230, "Rsk", 231),
+    (231, "OKP",NULL),
+    (232, "BB", 232),
+    (233, "KK", 231);
     
+SELECT * FROM Employee;
     
-    
+SELECT * FROM Employee AS e
+JOIN Employee AS m
+ON e.em_id = m.mng_id;
     
     
     
