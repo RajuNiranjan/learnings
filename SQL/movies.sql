@@ -402,18 +402,36 @@ SELECT * FROM Employee AS e
 JOIN Employee AS m
 ON e.em_id = m.mng_id;
     
+SELECT name FROM Employee
+UNION 
+SELECT name FROM Employee;
     
+SELECT * FROM Student;
+
+SELECT AVG(marks) 
+FROM Student;
+
+SELECT full_name, marks 
+FROM Student
+WHERE marks > (SELECT AVG(marks) FROM Student);
+
+SELECT studentId,full_name 
+FROM Student
+WHERE studentId IN (
+	SELECT studentId 
+    FROM Student
+    WHERE studentId % 2 = 0
+    );
+
+SELECT * FROM Teacher;
     
+CREATE VIEW view1 AS
+SELECT * FROM Student;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+SELECT * FROM view1
+WHERE marks > 90;
+        
+DROP VIEW view1;
     
     
     
