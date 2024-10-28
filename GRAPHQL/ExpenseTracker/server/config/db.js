@@ -1,5 +1,5 @@
+import { ENV_VAR } from "../utils/EnvVar.js";
 import mongoose from "mongoose";
-import { ENV_VAR } from "../utils/env_var.js";
 
 const ConnectDB = async () => {
   try {
@@ -7,13 +7,13 @@ const ConnectDB = async () => {
     if (DB_URI) {
       await mongoose
         .connect(DB_URI)
-        .then(() => console.log("server connected to data base"))
-        .catch((e) => console.log(e));
+        .then(() => console.log("server connected to Data Base"))
+        .catch((error) => console.log(error));
     } else {
       console.log("Invalid Data Base URL");
     }
   } catch (error) {
-    console.log("while connecting to data base an error occured", error);
+    console.log("error while connecting to Data Base", error);
   }
 };
 
