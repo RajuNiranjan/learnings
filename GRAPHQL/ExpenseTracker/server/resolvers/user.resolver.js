@@ -1,4 +1,8 @@
 export const userResolve = {
-  Query: {},
+  Query: {
+    users: async () => {
+      return;
+    },
+  },
   Mutation: {},
 };
