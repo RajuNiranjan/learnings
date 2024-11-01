@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Page Title</title>
+    <!-- Link to external CSS (optional) -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Welcome to Student Table</h1>
+    </header>
+
+    <a href="/">Home</a>
+
+    <!-- Main content -->
+    <main>
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>Roll No</th>
+              <th>Name</th>
+              <th>Branch</th>
+              <th>CGPA</th>
+              <th>Hostler</th>
+              <th>city</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for student in students %}
+
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{student.name}}</td>
+              <td>{{student.branch}}</td>
+              <td>{{student.age}}</td>
+              <td>{{student.isHostler}}</td>
+              <td>{{student.city}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+    </footer>
+
+    <!-- Link to external JavaScript (optional) -->
+    <script src="script.js"></script>
+  </body>
+</html>
