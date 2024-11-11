@@ -1,4 +1,10 @@
+import { UserModel } from "../models/user.model.js";
+
 export const userResolver = {
   Mutation: {},
-  Query: {},
+  Query: {
+    users: async () => {
+      return UserModel.find();
+    },
+  },
 };
