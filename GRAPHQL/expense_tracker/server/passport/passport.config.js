@@ -1,4 +1,4 @@
-import passport, { use } from "passport";
+import passport from "passport";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../models/user.model.js";
 import { GraphQLLocalStrategy } from "graphql-passport";
@@ -32,7 +32,7 @@ export const configurePassport = async () => {
 
         const validatePassword = await bcrypt.compare(passport, user.password);
 
-        if (!password) {
+        if (!validatePassword) {
           throw new Error("Invalid credentials");
         }
 
