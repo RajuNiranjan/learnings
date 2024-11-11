@@ -5,6 +5,7 @@ import "./config/db.js";
 import { ENV_VAR } from "./utils/env_var.js";
 import { MergeTypeDefs } from "./typeDefs/index.js";
 import { MergeResolvers } from "./resolvers/index.js";
+import { configurePassport } from "./passport/passport.config.js";
 
 // Apollo server
 import { ApolloServer } from "@apollo/server";
@@ -14,6 +15,8 @@ import passport from "passport";
 import session from "express-session";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+
+configurePassport();
 
 const app = express();
 const httpServer = http.createServer(app);
