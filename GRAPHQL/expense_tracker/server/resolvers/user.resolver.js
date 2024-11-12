@@ -42,14 +42,17 @@ export const userResolver = {
     // LOG_IN
     login: async (_, { input }, context) => {
       const { username, password } = input;
+      console.log(
+        "context",
+        await context.authenticate("graphql-local", { username, password })
+      );
       try {
-        const { user } = context.authenicate("graphql-local", {
+        const { user } = await context.authenticate("graphql-local", {
           username,
           password,
         });
 
         await context.login(user);
-
         return user;
       } catch (error) {
         console.log(error);
