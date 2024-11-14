@@ -1,6 +1,6 @@
 export const userTypeDef = `#graphql 
 
-type User{
+type User {
     _id: ID!
     username: String!
     name: String!
@@ -9,14 +9,14 @@ type User{
     profilePicture: String!
 }
 
-type Query{
-    authUser: User
-    user(userId: ID!): User
+type Query {
+    user(userId: ID!):User
+    authUser: User 
 }
 
 type Mutation {
-    signUp(input: SignUpInput!): User
-    login(input: LoginInput!): User
+    signUp(input: SignUpInput!):User
+    login(input: LoginInput!):User
     logout: LogoutResponse
 }
 
@@ -29,7 +29,6 @@ input SignUpInput{
     name: String!
     password: String!
     gender: String!
-    profilePicture: String!
 }
 
 input LoginInput{

@@ -1,25 +1,27 @@
 import express from "express";
-import cors from "cors";
 import http from "http";
-import connectMongo from "connect-mongodb-session";
-import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@apollo/server/express4";
+import cors from "cors";
 import session from "express-session";
 import passport from "passport";
-import { EVN_VAR } from "./utils/env_var.js";
-import { buildContext } from "graphql-passport";
-import "./config/db.js";
-import { MergeTypeDef } from "./typeDefs/index.js";
-import { MergeResolvers } from "./resolvers/index.js";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import connectDB from "connect-mongodb-session";
+import { ApolloServer } from "@apollo/server";
+import { ENV_VAR } from "./utils/env_var.js";
 import { passportConfig } from "./config/passport.config.js";
+import { expressMiddleware } from "@apollo/server/express4";
+import { MergedTypeDef } from "./typeDefs/index.typeDef.js";
+import { MergedResolver } from "./resolvers/index.resolver.js";
+import { buildContext } from "graphql-passport";
+import "./config/db.config.js";
+
+passportConfig();
+
 const app = express();
 const httpServer = http.createServer(app);
-passportConfig();
-const MongoStore = connectMongo(session);
+
+const MongoStore = connectDB(session);
 
 const store = new MongoStore({
-  uri: EVN_VAR.DB_URI,
+  uri: ENV_VAR.DB_URI,
   collection: "sessions",
 });
 
@@ -27,7 +29,7 @@ store.on("error", (error) => console.log(error));
 
 app.use(
   session({
-    secret: EVN_VAR.SESSION_SECRET,
+    secret: ENV_VAR.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -38,29 +40,28 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 const server = new ApolloServer({
-  typeDefs: MergeTypeDef,
-  resolvers: MergeResolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  typeDefs: MergedTypeDef,
+  resolvers: MergedResolver,
+  //   plugins,
 });
 
 await server.start();
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(
   "/graphql",
-  express.json(),
   cors({
-    origin: EVN_VAR.CORS_ORIGIN,
+    origin: ENV_VAR.CORS_ORIGIN,
     httpOnly: true,
-    credentials: true,
   }),
+  express.json(),
   expressMiddleware(server, {
-    context: async ({ req, res }) => buildContext({ req, res }),
+    context: ({ req, res }) => buildContext({ req, res }),
   })
 );
 
-await new Promise((resolve) => httpServer.listen(EVN_VAR.PORT, resolve));
-console.log(`🚀 Server ready at http://localhost:${EVN_VAR.PORT}/graphql`);
+const PORT = ENV_VAR.PORT;
+httpServer.listen(PORT, () => console.log(`server is running port no ${PORT}`));

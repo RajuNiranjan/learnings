@@ -3,47 +3,39 @@ import passport from "passport";
 import { GraphQLLocalStrategy } from "graphql-passport";
 import { UserModel } from "../models/user.model.js";
 
-export const passportConfig = () => {
+export const passportConfig = async () => {
+  // PASSPORT LOGIN
   passport.use(
     new GraphQLLocalStrategy(async (username, password, done) => {
       try {
         const user = await UserModel.findOne({ username });
-        if (!user) {
-          return done(null, false, { message: "Invalid User" });
-        }
+        if (!user) throw new Error("Unauthorized user");
         const verifyPassword = await bcrypt.compare(password, user.password);
-        if (!verifyPassword) {
-          return done(null, false, { message: "Invalid credentials" });
-        }
+        if (!verifyPassword) throw new Error("Invalid Credentials");
         return done(null, user);
       } catch (error) {
-        console.error(error);
-        return done(error);
+        console.log(error);
+        throw new Error(error.message);
       }
     })
   );
 
+  // SERIALIZE USER TO SESSION
   passport.serializeUser((user, done) => {
-    console.log("serializing user");
-    if (user) {
-      done(null, user._id);
-    } else {
-      done(new Error("User object is null or undefined"));
-    }
+    console.log("SERIALIZING_USER_TO_SESSION");
+    done(null, user.id);
   });
 
+  // DESERIALIZE USER FROM SESSION
   passport.deserializeUser(async (id, done) => {
-    console.log("deserializing user");
+    console.log("DESERIALIZING_USER_FROM_SESSION");
     try {
       const user = await UserModel.findById(id);
-      if (user) {
-        done(null, user);
-      } else {
-        done(null, false);
-      }
+      if (!user) throw new Error("User not found");
+      done(null, user);
     } catch (error) {
-      console.error(error);
-      done(error);
+      console.log(error);
+      throw new Error(error.message);
     }
   });
 };
