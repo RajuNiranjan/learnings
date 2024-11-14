@@ -12,6 +12,7 @@ import { MergedTypeDef } from "./typeDefs/index.typeDef.js";
 import { MergedResolver } from "./resolvers/index.resolver.js";
 import { buildContext } from "graphql-passport";
 import "./config/db.config.js";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 
 passportConfig();
 
@@ -43,7 +44,7 @@ app.use(
 const server = new ApolloServer({
   typeDefs: MergedTypeDef,
   resolvers: MergedResolver,
-  //   plugins,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 await server.start();
@@ -54,7 +55,7 @@ app.use(passport.session());
 app.use(
   "/graphql",
   cors({
-    origin: ENV_VAR.CORS_ORIGIN,
+    origin: ENV_VAR.CORS_ORIGIN || "http://localhost:3000",
     httpOnly: true,
   }),
   express.json(),

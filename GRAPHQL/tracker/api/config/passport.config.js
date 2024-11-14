@@ -31,7 +31,6 @@ export const passportConfig = async () => {
     console.log("DESERIALIZING_USER_FROM_SESSION");
     try {
       const user = await UserModel.findById(id);
-      if (!user) throw new Error("User not found");
       done(null, user);
     } catch (error) {
       console.log(error);
