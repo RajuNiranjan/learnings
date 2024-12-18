@@ -38,7 +38,25 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
+  const { email, password } = req.body;
   try {
+    if (!email | !password) {
+      return res.status(400).json({ message: "all fields are required" });
+    }
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
+    const verifyPassword = await bcrypt.compare(password, user.password);
+    if (!verifyPassword) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    const token = genToken(user._id);
+    const userResponse = user.toObject();
+    delete userResponse.password;
+    return res
+      .status(200)
+      .json({ message: "login successfully", token, userResponse });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
     console.log(error);
