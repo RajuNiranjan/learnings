@@ -5,3 +5,7 @@
 -Nest.js
 -Next.js
 -Express.js
+-Socket.io
+-Socket.io-client
+-Reducx
+-
