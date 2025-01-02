@@ -13,4 +13,4 @@ export const generateToken = (userId, res) => {
         secure: ENV_VAR.NODE_ENV === "production"
     });
     return token
-}
+} 
