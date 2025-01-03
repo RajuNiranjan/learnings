@@ -1,0 +1,14 @@
+{
+  "name": "color_picker",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "description": "chose the colors for the background changibility",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "icons": {
+    "18": "icon18.svg"
+  }
+}
