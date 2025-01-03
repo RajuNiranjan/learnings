@@ -1,24 +1,50 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import HomeScreen from "./pages/HomeScree";
 import LoginScreen from "./pages/LoginScreen";
 import SignUpScreen from "./pages/SignUpScreen";
 import ProfileScreen from "./pages/ProfileScreen";
 import SettingsScreen from "./pages/SettingsScreen";
+import { useAuthStore } from "./store/useAuthStore";
+import { Loader } from "lucide-react";
 
 const App = () => {
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isCheckingAuth && !authUser)
+    return (
+      <div className="flex items-center justify-center  h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
   return (
-    <div>
+    <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/signup" element={<SignUpScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
+        <Route
+          path="/"
+          element={authUser ? <HomeScreen /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginScreen /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUpScreen /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile"
+          element={authUser ? <ProfileScreen /> : <Navigate to="/login" />}
+        />
         <Route path="/settings" element={<SettingsScreen />} />
       </Routes>
-    </div>
+    </>
   );
 };
 
