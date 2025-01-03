@@ -8,18 +8,20 @@ import ProfileScreen from "./pages/ProfileScreen";
 import SettingsScreen from "./pages/SettingsScreen";
 import { useAuthStore } from "./store/useAuthStore";
 import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  console.log("authUser", authUser);
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  }, []);
 
-  if (isCheckingAuth && !authUser)
+  if (isCheckingAuth)
     return (
-      <div className="flex items-center justify-center  h-screen">
-        <Loader className="size-10 animate-spin" />
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="w-10 h-10 animate-spin" />
       </div>
     );
   return (
@@ -44,6 +46,7 @@ const App = () => {
         />
         <Route path="/settings" element={<SettingsScreen />} />
       </Routes>
+      <Toaster />
     </>
   );
 };
