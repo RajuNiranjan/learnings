@@ -4,6 +4,7 @@ import { ENV_VAR } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routes/auth.route.js";
+import { MessageRouter } from "./routes/message.route.js";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(
 );
 
 app.use("/api/auth", AuthRouter);
+app.use("/api/messages", MessageRouter);
 
 app.listen(ENV_VAR.PORT, () => {
   console.log("server is running on PORT:" + ENV_VAR.PORT);
