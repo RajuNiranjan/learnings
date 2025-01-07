@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0;
+}
+
+body {
+  width: 450px;
+  background: #000;
+  color: #fff;
+}
