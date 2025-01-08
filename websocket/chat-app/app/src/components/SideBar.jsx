@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useChatStore from "../store/useChatStore";
 import SidebarSkeleton from "../skeletons/SidebarSskeleton";
 import { Users } from "lucide-react";
@@ -8,6 +8,8 @@ const SideBar = () => {
   const { users, getUsers, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
   const { onlineUsers } = useAuthStore();
+
+  console.log("onlineUser", onlineUsers);
 
   useEffect(() => {
     getUsers();
@@ -36,8 +38,7 @@ const SideBar = () => {
                   ? "bg-base-300 ring-1 ring-base-300"
                   : ""
               }
-            `}
-          >
+            `}>
             <div className="relative mx-auto lg:mx-0">
               <img
                 src={user.profilePic || "/vite.svg"}
