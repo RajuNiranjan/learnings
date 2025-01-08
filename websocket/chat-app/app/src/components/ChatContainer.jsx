@@ -1,16 +1,29 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import useChatStore from "../store/useChatStore";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
-    useChatStore();
+  const {
+    messages,
+    getMessages,
+    isMessagesLoading,
+    selectedUser,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
 
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages]);
+    subscribeToMessages();
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser._id,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   if (isMessagesLoading) return <MessageSkeleton />;
 
@@ -32,8 +45,7 @@ const ChatContainer = () => {
             key={message._id}
             className={`chat ${
               message.senderId === selectedUser._id ? "chat-start" : "chat-end"
-            }`}
-          >
+            }`}>
             <div className="chat-bubble">
               {message.text}
               {message.image && (
