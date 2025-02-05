@@ -9,6 +9,10 @@ const data = [
     {
         title: "todo_zustand",
         path: "/todo-zustand"
+    },
+    {
+        title: "counter_zustand",
+        path: "/counter-zustand"
     }
 ]
 
